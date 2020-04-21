@@ -13,7 +13,7 @@ class Camera:
         obj_points = []  # 3D points of chessboard
 
         # Generate 3D chess grid of corners
-        chess_objp = np.zeros((chess_size[0], chess_size[1], 3), np.float32)
+        chess_objp = np.zeros((chess_size[0] * chess_size[1], 3), np.float32)
         chess_objp[:, :2] = np.mgrid[0:chess_size[0], 0:chess_size[1]].T.reshape(-1, 2)
 
         sub_pixel_criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
@@ -25,7 +25,7 @@ class Camera:
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # Convert to gray scale
             img_size = gray.shape if img_size is None else img_size
 
-            found, corners = cv2.findChessboardCorners(gray, chess_size)
+            found, corners = cv2.findChessboardCorners(gray, chess_size, None)
 
             if found:
                 obj_points.append(chess_objp)
